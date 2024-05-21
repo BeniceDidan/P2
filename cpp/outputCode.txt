@@ -1,0 +1,90 @@
+#include <iostream>
+
+using namespace std;
+
+class Car
+{
+public:
+    int ban;
+    int bahanbakar;
+    int penumpang;
+    int kecepatan;
+    int bahanbakar_max;
+
+    Car()
+    {
+        this->ban = 4;
+        this->bahanbakar = 100;
+        this->penumpang = 100;
+        this->kecepatan = 4;
+        this->bahanbakar_max = 20;
+
+        cout << "Class Mobil Telah Dibuat" << endl;
+    }
+
+    virtual void Jalan()
+    {
+        cout << "Mobil Berjalan dengan Kecepatan " << kecepatan << " KM/Jam" << endl;
+        this->bahanbakar = this->bahanbakar - this->kecepatan;
+    }
+};
+
+class SuperCar : public Car
+{
+public:
+    SuperCar()
+    {
+        kecepatan = 100;
+        bahanbakar = 1000;
+        bahanbakar_max = 1000;
+    }
+};
+
+class Pickup : public Car
+{
+public:
+    int kapasitas;
+    int kapasitas_max;
+    Pickup()
+    {
+        kapasitas = 1;
+        kapasitas_max = 100;
+    }
+
+    void Angkut(int kapasitas)
+    {
+        this->kapasitas = this->kapasitas + kapasitas;
+        if (kapasitas < kapasitas_max)
+        {
+            cout << "Mobil mengangkut kapasitas " << kapasitas << "kg" << endl;
+        }
+        else
+        {
+            cout << "Mobil melebihi kapasitas" << endl;
+        }
+    }
+
+    void Jalan() override
+    {
+        kecepatan = kecepatan / kapasitas;
+        bahanbakar = bahanbakar - (kecepatan * (kapasitas / 2));
+
+        cout << "Mobil berjalan dengan kapasitas " << kapasitas << " kg" << endl;
+        cout << "Mobil Berjalan dengan Kecepatan " << kecepatan << " KM/Jam" << endl;
+        cout << "Mobil Berjalan dengan Bahan Bakar / sisanya " << bahanbakar << " Liter" << endl;
+    }
+};
+
+int main()
+{
+    Car mobil;
+    SuperCar mclaren;
+    Pickup l300;
+
+    mobil.Jalan();
+    mclaren.Jalan();
+    l300.Jalan();
+    l300.Angkut(20);
+    return 0;
+}
+
